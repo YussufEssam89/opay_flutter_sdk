@@ -24,7 +24,6 @@ class WebViewPage extends StatelessWidget{
         ),
         home: OPayWebView(webUrl: webUrl,isLocalUrl:isLocalUrl,
             backIconFunc: (WebJsResponse? result) {
-                print("-*-*-*-*-*-*   WEBVIEW PAGE BACK BUTTON ${backIconFunc != null}");
                 backIconFunc.call(result);
             }
         ),

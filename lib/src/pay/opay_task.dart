@@ -55,7 +55,6 @@ class OPayTask{
                 builder:(BuildContext context)=>WebViewPage(
                   webUrl: cashierUrl,
                   backIconFunc: (WebJsResponse? result) {
-                    print("-*-*-*-*-*-*   OPAY TASK BACK BUTTON ${backIconFunc != null}");
                     backIconFunc.call(result);
                   },
                 )

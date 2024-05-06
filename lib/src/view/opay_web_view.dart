@@ -122,7 +122,6 @@ class _OPayWebView extends State<OPayWebView>{
   }
 
   _finishPage(WebJsResponse? webJsResponse){
-    print("-*-*-*-*-*-*   OPAY WEBVIEW BACK BUTTON ${widget.backIconFunc != null}");
     widget.backIconFunc(webJsResponse);
   }
 
