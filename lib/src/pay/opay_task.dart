@@ -24,7 +24,7 @@ class OPayTask{
       BuildContext context,
       PayParams params,
       {
-        Function(WebJsResponse?)? backIconFunc,
+        required Function(WebJsResponse?) backIconFunc,
         Function()? httpFinishedMethod,
       }) async{
     var requestParams = OrderRequest(params.merchantName,
@@ -55,9 +55,8 @@ class OPayTask{
                 builder:(BuildContext context)=>WebViewPage(
                   webUrl: cashierUrl,
                   backIconFunc: (WebJsResponse? result) {
-                    if(backIconFunc!=null){
-                      backIconFunc.call(result);
-                    }
+                    print("-*-*-*-*-*-*   OPAY TASK BACK BUTTON ${backIconFunc != null}");
+                    backIconFunc.call(result);
                   },
                 )
             )

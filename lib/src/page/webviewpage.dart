@@ -11,8 +11,8 @@ class WebViewPage extends StatelessWidget{
 
   String webUrl;
   bool isLocalUrl;
-  Function(WebJsResponse?)? backIconFunc;
-  WebViewPage({Key? key, this.webUrl="",this.isLocalUrl=false,this.backIconFunc}) : super(key: key);
+  Function(WebJsResponse?) backIconFunc;
+  WebViewPage({Key? key, this.webUrl="",this.isLocalUrl=false,required this.backIconFunc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,8 @@ class WebViewPage extends StatelessWidget{
         ),
         home: OPayWebView(webUrl: webUrl,isLocalUrl:isLocalUrl,
             backIconFunc: (WebJsResponse? result) {
-              if(backIconFunc!=null){
-                backIconFunc!.call(result);
-              } else {
-                Navigator.pop(context,result);
-              }
+                print("-*-*-*-*-*-*   WEBVIEW PAGE BACK BUTTON ${backIconFunc != null}");
+                backIconFunc.call(result);
             }
         ),
       ),

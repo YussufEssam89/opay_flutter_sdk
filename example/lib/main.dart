@@ -77,6 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
     EasyLoading.show(status: "loading");
     OPayTask().createOrder(context,payParams,httpFinishedMethod:(){
       EasyLoading.dismiss();
+    }, backIconFunc: (_) {
+      //
     }).then((response){
       // httpResponse （Just check the reason for the failure of the network request）
       setState(() {

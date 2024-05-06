@@ -12,11 +12,11 @@ class OPayWebView extends StatefulWidget{
 
   String webUrl;
   bool isLocalUrl;
-  Function(WebJsResponse?)? backIconFunc;
+  Function(WebJsResponse?) backIconFunc;
 
 
 
-  OPayWebView({Key? key, this.webUrl="",this.isLocalUrl=false,this.backIconFunc}) : super(key: key);
+  OPayWebView({Key? key, this.webUrl="",this.isLocalUrl=false,required this.backIconFunc}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -122,9 +122,8 @@ class _OPayWebView extends State<OPayWebView>{
   }
 
   _finishPage(WebJsResponse? webJsResponse){
-    if(widget.backIconFunc!=null){
-      widget.backIconFunc!(webJsResponse);
-    }
+    print("-*-*-*-*-*-*   OPAY WEBVIEW BACK BUTTON ${widget.backIconFunc != null}");
+    widget.backIconFunc(webJsResponse);
   }
 
   JavascriptChannel _clickResultOKBtn(BuildContext context) => JavascriptChannel(
