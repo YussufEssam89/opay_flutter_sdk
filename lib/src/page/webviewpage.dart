@@ -11,7 +11,8 @@ class WebViewPage extends StatelessWidget{
 
   String webUrl;
   bool isLocalUrl;
-  WebViewPage({Key? key, this.webUrl="",this.isLocalUrl=false}) : super(key: key);
+  Function(WebJsResponse?)? backIconFunc;
+  WebViewPage({Key? key, this.webUrl="",this.isLocalUrl=false,this.backIconFunc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,12 @@ class WebViewPage extends StatelessWidget{
           primarySwatch: Colors.blue,
         ),
         home: OPayWebView(webUrl: webUrl,isLocalUrl:isLocalUrl,
-            backIconFunc: (WebJsResponse? result){Navigator.pop(context,result);
+            backIconFunc: (WebJsResponse? result) {
+              if(backIconFunc!=null){
+                backIconFunc!.call(result);
+              } else {
+                Navigator.pop(context,result);
+              }
             }
         ),
       ),
@@ -35,8 +41,7 @@ class WebViewPage extends StatelessWidget{
         //   "",
         //   ""
         // );
-        Navigator.pop(context,null);
-        return true;
+        return false;
       },
     );
   }

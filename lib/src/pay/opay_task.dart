@@ -20,7 +20,13 @@ class OPayTask{
   final _createOrderUrl = "/api/v1/international/cashier/create";
   final _cashierStatus = "/api/v1/international/cashier/status";
 
-  Future<OPayResponse> createOrder(BuildContext context,PayParams params,{Function()? httpFinishedMethod}) async{
+  Future<OPayResponse> createOrder(
+      BuildContext context,
+      PayParams params,
+      {
+        Function(WebJsResponse?)? backIconFunc,
+        Function()? httpFinishedMethod,
+      }) async{
     var requestParams = OrderRequest(params.merchantName,
         params.countryCode.toUpperCase(),
         params.reference,
@@ -46,7 +52,14 @@ class OPayTask{
         //去webview页面支付
         webResult = await Navigator.push(context,
             MaterialPageRoute(
-                builder:(BuildContext context)=>WebViewPage(webUrl: cashierUrl)
+                builder:(BuildContext context)=>WebViewPage(
+                  webUrl: cashierUrl,
+                  backIconFunc: (WebJsResponse? result) {
+                    if(backIconFunc!=null){
+                      backIconFunc.call(result);
+                    }
+                  },
+                )
             )
         );
       }
