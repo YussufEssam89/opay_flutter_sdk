@@ -1,4 +1,4 @@
-library opay_online_flutter_sdk;
+library opay_flutter_sdk;
 
 export 'src/pay/opay_task.dart';
 export 'src/model/pay_model.dart';

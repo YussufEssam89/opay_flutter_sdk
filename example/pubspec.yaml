@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #opay_online_flutter_sdk: "<2.0.0"
+  #opay_flutter_sdk: "<2.0.0"
   flutter_easyloading: ^3.0.3
 
 
@@ -40,7 +40,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  opay_online_flutter_sdk:
+  opay_flutter_sdk:
     path: ../
 
 

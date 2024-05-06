@@ -5,7 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:opay_online_flutter_sdk/src/model/web_js_response.dart';
+import 'package:opay_flutter_sdk/src/model/web_js_response.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class OPayWebView extends StatefulWidget{

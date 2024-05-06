@@ -1,4 +1,4 @@
-name: opay_online_flutter_sdk
+name: opay_flutter_sdk
 description: opay sdk for flutter.
 version: 0.9.6
 homepage: https://www.opaycheckout.com/
@@ -73,5 +73,5 @@ flutter:
   # identifiers, which may be completely independent or the same as these.
   module:
     androidX: true
-    androidPackage: com.opay.opay_online_flutter_sdk
+    androidPackage: com.opay.opay_flutter_sdk
     iosBundleIdentifier: com.opay.opayOnlineFlutterSdk

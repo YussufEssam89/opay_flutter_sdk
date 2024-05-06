@@ -3,7 +3,7 @@ import 'package:example/order_params_editor_page.dart';
 import 'package:example/status_params_editor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:opay_online_flutter_sdk/opay_online_flutter_sdk.dart';
+import 'package:opay_flutter_sdk/opay_flutter_sdk.dart';
 
 void main() {
   runApp(const MyApp());

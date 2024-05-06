@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:opay_online_flutter_sdk/opay_online_flutter_sdk.dart';
+import 'package:opay_flutter_sdk/opay_flutter_sdk.dart';
 
 class OrderParamsEditorPage extends StatefulWidget{
 

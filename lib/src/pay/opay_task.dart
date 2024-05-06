@@ -1,16 +1,16 @@
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:opay_online_flutter_sdk/opay_online_flutter_sdk.dart';
-import 'package:opay_online_flutter_sdk/src/http/http_manager.dart';
-import 'package:opay_online_flutter_sdk/src/http/http_status.dart';
-import 'package:opay_online_flutter_sdk/src/model/o_pay_response.dart';
-import 'package:opay_online_flutter_sdk/src/model/order_model.dart';
-import 'package:opay_online_flutter_sdk/src/model/request.dart';
-import 'package:opay_online_flutter_sdk/src/model/web_js_response.dart';
+import 'package:opay_flutter_sdk/opay_flutter_sdk.dart';
+import 'package:opay_flutter_sdk/src/http/http_manager.dart';
+import 'package:opay_flutter_sdk/src/http/http_status.dart';
+import 'package:opay_flutter_sdk/src/model/o_pay_response.dart';
+import 'package:opay_flutter_sdk/src/model/order_model.dart';
+import 'package:opay_flutter_sdk/src/model/request.dart';
+import 'package:opay_flutter_sdk/src/model/web_js_response.dart';
 import 'dart:convert' as json_convert;
 
-import 'package:opay_online_flutter_sdk/src/page/webviewpage.dart';
+import 'package:opay_flutter_sdk/src/page/webviewpage.dart';
 
 class OPayTask{
 

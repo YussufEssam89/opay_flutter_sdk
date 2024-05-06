@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:opay_online_flutter_sdk/opay_online_flutter_sdk.dart';
-import 'package:opay_online_flutter_sdk/src/model/order_model.dart';
-import 'package:opay_online_flutter_sdk/src/model/response.dart';
+import 'package:opay_flutter_sdk/opay_flutter_sdk.dart';
+import 'package:opay_flutter_sdk/src/model/order_model.dart';
+import 'package:opay_flutter_sdk/src/model/response.dart';
 
 import '../model/request.dart';
 import 'http_status.dart';

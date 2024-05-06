@@ -1,7 +1,7 @@
 
 import 'dart:core';
 
-import 'package:opay_online_flutter_sdk/src/model/user_model.dart';
+import 'package:opay_flutter_sdk/src/model/user_model.dart';
 
 class PayParams{
   String publicKey;

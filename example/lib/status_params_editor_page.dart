@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:opay_online_flutter_sdk/opay_online_flutter_sdk.dart';
+import 'package:opay_flutter_sdk/opay_flutter_sdk.dart';
 
 // ignore: must_be_immutable
 class StatusParamsEditorPage extends StatefulWidget{
