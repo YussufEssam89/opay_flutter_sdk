@@ -28,9 +28,91 @@ class OPayWebView extends StatefulWidget{
 class _OPayWebView extends State<OPayWebView>{
 
   int _currentProgress=0;
-  WebViewController? _webViewController;
+  late WebViewController _webViewController;
 
   _OPayWebView();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _webViewController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..enableZoom(false)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            setState(() {
+              _currentProgress = progress;
+            });
+          },
+          onPageStarted: (String url) {
+            debugPrint('Page started loading: $url');
+          },
+          onPageFinished: (String url) {
+            debugPrint('Page finished loading: $url');
+          },
+          onWebResourceError: (WebResourceError error) {
+            debugPrint('''
+              Page resource error:
+                code: ${error.errorCode}
+                description: ${error.description}
+                errorType: ${error.errorType}
+                isForMainFrame: ${error.isForMainFrame}
+            ''');
+          },
+          onNavigationRequest: (NavigationRequest request) {
+            debugPrint(request.url);
+            if(!request.url.startsWith("http")){
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+          onHttpError: (HttpResponseError error) {
+            debugPrint('Error occurred on page: ${error.response?.statusCode}');
+          },
+          onUrlChange: (UrlChange change) {
+            debugPrint('url change to ${change.url}');
+          },
+          onHttpAuthRequest: (HttpAuthRequest request) {
+            //
+          },
+        ),
+      )
+      ..addJavaScriptChannel(
+        'clickResultOKBtn',
+        onMessageReceived: (JavaScriptMessage message) {
+          String resultMsg = message.message;
+          Map<String,dynamic> map = json.decode(resultMsg);
+          WebJsResponse response = WebJsResponse.fromJson(map);
+          _finishPage(response);
+        },
+      )
+      ..addJavaScriptChannel(
+        'clickResultCancelBtn',
+        onMessageReceived: (JavaScriptMessage message) {
+          String resultMsg = message.message;
+          Map<String,dynamic> map = json.decode(resultMsg);
+          WebJsResponse response = WebJsResponse.fromJson(map);
+          _finishPage(response);
+        },
+      )
+      ..addJavaScriptChannel(
+        'clickReferenceCodeReturnBtn',
+        onMessageReceived: (JavaScriptMessage message) {
+          String resultMsg = message.message;
+          Map<String,dynamic> map = json.decode(resultMsg);
+          WebJsResponse response = WebJsResponse.fromJson(map);
+          _finishPage(response);
+        },
+      )
+      ..loadRequest(
+          Uri.parse(
+              widget.isLocalUrl ? Uri.dataFromString(widget.webUrl, mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+                  .toString(): widget.webUrl
+          )
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +124,6 @@ class _OPayWebView extends State<OPayWebView>{
   @override
   void dispose(){
     super.dispose();
-    _webViewController = null;
 
   }
 
@@ -70,86 +151,15 @@ class _OPayWebView extends State<OPayWebView>{
         _linearProgressIndicator(),
         Expanded(
           flex: 1,
-          child: WebView(
-            debuggingEnabled: false,
-            zoomEnabled:false,
-            initialUrl: widget.isLocalUrl ? Uri.dataFromString(widget.webUrl, mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
-                .toString(): widget.webUrl,
-            javascriptMode: JavascriptMode.unrestricted,
-            javascriptChannels: <JavascriptChannel>{
-              _clickResultOKBtn(context),
-              _clickResultCancelBtn(context),
-              _clickReferenceCodeReturnBtn(context)
-            },
-            navigationDelegate: (NavigationRequest request) {
-              debugPrint(request.url);
-              if(!request.url.startsWith("http")){
-                return NavigationDecision.prevent;
-              }
-              return NavigationDecision.navigate;
-            },
-            onWebViewCreated: (WebViewController controller){
-              _webViewController = controller;
-              if(widget.isLocalUrl){
-                _loadHtmlAssets(controller);
-              }else{
-                controller.loadUrl(widget.webUrl);
-              }
-              controller.canGoBack().then((value) => debugPrint(value.toString()));
-              controller.canGoForward().then((value) => debugPrint(value.toString()));
-              controller.currentUrl().then((value) => debugPrint(value));
-            },
-            onProgress: (int progress){
-              setState(() {
-                _currentProgress = progress;
-              });
-            },
-            onPageFinished: (String value){
-
-            },
+          child: WebViewWidget(
+            controller: _webViewController,
           ),
         )
       ],
     );
   }
 
-
-  //加载本地文件
-  _loadHtmlAssets(WebViewController controller) async {
-    String htmlPath = await rootBundle.loadString(widget.webUrl);
-    controller.loadUrl(Uri.dataFromString(htmlPath,mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
-        .toString());
-  }
-
   _finishPage(WebJsResponse? webJsResponse){
     widget.backIconFunc(webJsResponse);
   }
-
-  JavascriptChannel _clickResultOKBtn(BuildContext context) => JavascriptChannel(
-      name: 'clickResultOKBtn', // 与h5 端的一致 不然收不到消息
-      onMessageReceived: (JavascriptMessage message) async{
-        String resultMsg = message.message;
-        Map<String,dynamic> map = json.decode(resultMsg);
-        WebJsResponse response = WebJsResponse.fromJson(map);
-        _finishPage(response);
-      });
-
-  JavascriptChannel _clickResultCancelBtn(BuildContext context) => JavascriptChannel(
-      name: 'clickResultCancelBtn', // 与h5 端的一致 不然收不到消息
-      onMessageReceived: (JavascriptMessage message) async{
-        String resultMsg = message.message;
-        Map<String,dynamic> map = json.decode(resultMsg);
-        WebJsResponse response = WebJsResponse.fromJson(map);
-        _finishPage(response);
-      });
-
-  JavascriptChannel _clickReferenceCodeReturnBtn(BuildContext context) => JavascriptChannel(
-      name: 'clickReferenceCodeReturnBtn', // 与h5 端的一致 不然收不到消息
-      onMessageReceived: (JavascriptMessage message) async{
-        String resultMsg = message.message;
-        Map<String,dynamic> map = json.decode(resultMsg);
-        WebJsResponse response = WebJsResponse.fromJson(map);
-        _finishPage(response);
-      });
-
 }
